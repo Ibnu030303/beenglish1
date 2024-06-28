@@ -1,0 +1,257 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500;1,600;1,700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+}
+
+:root {
+  --PrimaryColor: hsl(199, 100%, 33%);
+  --SecondaryColor: hsl(187, 85%, 43%);
+  --gradientColor: linear-gradient(
+    to right,
+    hsl(187, 85%, 43%),
+    hsl(199, 100%, 33%)
+  );
+  --whiteColor: hsl(0, 0%, 100%);
+  --blackColor: hsl(201, 33%, 16%);
+  --textColor: hsl(240, 4%, 36%);
+  --whiteColorDeam: hsl(0, 0%, 93%);
+  --greyText: rgb(190, 190, 190);
+  --inputColor: rgb(239, 239, 239);
+  --bodyColor: rgb(249, 249, 250);
+  --cardBG: rgb(255, 255, 235);
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bodyColor);
+}
+
+a {
+  text-decoration: none;
+}
+
+.container-fluid {
+  padding: 0 4%;
+}
+
+.containers {
+  padding: 0 10%;
+}
+
+.course h2,
+.about h2,
+.price h2,
+.info h2,
+.articel h2 {
+  color: #6d65e8;
+  font-size: 2.4rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.hero {
+  background: linear-gradient(180deg, #7221c2, #9553e2);
+  position: relative;
+  height: 100vh;
+}
+
+/* Show Course */
+.header {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #7221c2, #9553e2);
+  color: var(--greyText);
+}
+
+.hero-top {
+  height: 100vh;
+}
+
+.hero-bottom {
+  position: absolute;
+  bottom: -13%;
+  width: 100%;
+}
+
+.hero .hero-bottom .cards {
+  background: white;
+  padding: 3%;
+  border-radius: 20px;
+  box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+}
+
+.hero .hero-bottom .card { 
+  border: none;
+}
+
+.hero .hero-bottom .cards h5 {
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: #3483fa;
+}
+
+.hero h1 {
+  font-weight: 700;
+  font-size: 3rem;
+ }
+
+.hero h2 {
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+}
+
+.hero p {
+  font-weight: 200;
+  line-height: 2rem;
+  font-size: 1.2rem;
+}
+
+.course {
+  padding: 10% 0 0;
+}
+
+.course .card {
+  background: transparent;
+  border: none;
+}
+
+.course .card .card-img-top {
+  border-radius: 2rem;
+  height: 15rem;
+  width: 100%;
+}
+
+.course .card .card-body .card-title {
+  font-weight: 600;
+  font-size: 1.4rem;
+}
+
+.about {
+  padding: 5rem 0 5rem ;
+}
+
+.about h3 {
+  font-weight: 600;
+  color: #3483fa;
+  margin-bottom: 1.1rem;
+}
+
+.about p {
+  font-size: 15px ;
+  font-weight: 500;
+  line-height: 1.6rem;
+}
+
+.about img {
+  width: 100%;
+  height: 18rem;
+}
+
+.price {
+  padding: 5rem 0 ;
+}
+
+.price .card { 
+  width: 20rem; 
+  padding: 1rem;
+  margin: 0 3rem;
+  box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+  -webkit-box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+  -moz-box-shadow: 3px 4px 21px 3px rgba(0,0,0,0.3);
+}
+
+.price .cards {
+  background-color: #3483fa;
+  color: white;
+}
+
+.checklist {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; /* Mengatur item secara vertikal di tengah */
+}
+
+.checklist svg {
+  margin-right: 13px; /* Memberi ruang di antara ikon dan teks */
+}
+
+.checklist span {
+  flex-grow: 1; /* Mengatur teks agar memanfaatkan ruang yang tersedia */
+   /* Menghindari pemotongan teks yang terlalu panjang */
+  white-space: wrap; /* Mencegah pemisahan teks menjadi beberapa baris */
+  text-overflow: ellipsis; /* Menambahkan elipsis jika teks tidak muat */
+}
+
+.price .card .card-body h2   {
+  color: #3483fa;
+  font-weight: 600;
+}
+
+.info {
+  padding: 3% 0 5%;
+}
+
+.accordions {
+  background: white;
+  padding: 5% 0;
+}
+
+footer {
+  /* background: linear-gradient(180deg, #354ad1, #4e56f6); */
+  color: var(--greyText);
+  background: var(--blackColor);
+  display: flex;
+  justify-content: center;
+  height: auto;
+}
+
+footer .iframe {
+  width: 100%;
+  margin-bottom: 5rem;
+  height: 20rem;
+  border-radius: 3%;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .hero .row {
+    gap: 3rem;
+  }
+
+  .course {
+    padding-top: 10rem;
+  }
+  
+  .price .card {
+    margin: 1rem;
+  }
+}
+
+/* Extra Small Device */
+@media (min-width: 481px) and (max-width: 767px) {
+
+}
+
+/* Small Tablet */
+@media (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Large Tablet / Laptop */
+@media (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Dekstop */
+@media (min-width: 1200px) and (max-width: 1919px) {
+}

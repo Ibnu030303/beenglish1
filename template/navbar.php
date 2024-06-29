@@ -10,20 +10,20 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="https://beenglish.000webhostapp.com/">Beranda</a>
+                    <a class="nav-link active" aria-current="page" href="http://localhost/beexcellent/">Beranda</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="course.php">Course</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://beenglish.000webhostapp.com/#about">About</a>
+                    <a class="nav-link" href="http://localhost/beexcellent/#about">About</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="https://beenglish.000webhostapp.com/#articel">Articel</a>
+                    <a class="nav-link" href="http://localhost/beexcellent/#articel">Articel</a>
                 </li>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="https://beenglish.000webhostapp.com/#footer">Kontak</a>
+                    <a class="nav-link" href="http://localhost/beexcellent/#footer">Kontak</a>
                 </li>
             </ul>
             <div class="">

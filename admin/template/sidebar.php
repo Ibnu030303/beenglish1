@@ -14,32 +14,32 @@
             </li>
             <hr class="test-white">
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/admin/siswa/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/admin/view/view_siswa.php" class="sidebar-link">
                     <i class="lni lni-indent-increase"></i>
                     <span>Siswa</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/admin/instruktur/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/admin/view/view_instruktur.php" class="sidebar-link">
                     <i class="lni lni-license"></i>
                     <span>Instruktur</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/admin/siswa_baru/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/admin/view/view_siswa_baru.php" class="sidebar-link">
                     <i class="lni lni-consulting"></i>
                     <span>Siswa Baru</span>
                 </a>
             </li>
             <hr class="test-white">
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/admin/profile/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/admin/view/view_profile.php" class="sidebar-link">
                     <i class="lni lni-cogs"></i>
                     <span>Profile</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/admin/user/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/admin/view/view_user.php" class="sidebar-link">
                     <i class="lni lni-users"></i>
                     <span>Users</span>
                 </a>

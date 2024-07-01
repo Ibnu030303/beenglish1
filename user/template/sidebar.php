@@ -13,25 +13,25 @@
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/user/articel/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/user/view/view_articel.php" class="sidebar-link">
                     <i class="lni lni-book"></i>
                     <span>Articel</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/user/course/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/user/view/view_course.php" class="sidebar-link">
                     <i class="lni lni-comments-reply"></i>
                     <span>Course</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/user/program/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/user/view/view_program.php" class="sidebar-link">
                     <i class="lni lni-postcard"></i>
                     <span>Program</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="http://localhost/beexcellent/user/service/index.php" class="sidebar-link">
+                <a href="http://localhost/beexcellent/user/view/view_service.php" class="sidebar-link">
                     <i class="lni lni-grow"></i>
                     <span>Service</span>
                 </a>
@@ -45,3 +45,4 @@
         </div>
     </div>
 </aside>
+

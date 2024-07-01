@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     }
 }
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     }
 }
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa.php';
                         });";
     }
 }
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Siswa Baru Dashboard</title>
+    <title>Siswa Dashboard</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" />
@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Siswa Baru</li>
+                        <li class="breadcrumb-item active">Siswa</li>
                     </ol>
                 </nav>
             </div>
@@ -198,9 +198,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                     <div class="row">
                         <div class="col">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="overflow-y: auto;">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title mt-3 fw-bold">Siswa Baru</h5>
+                                        <h5 class="card-title mt-3 fw-bold">Siswa</h5>
                                         <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Tambah</button>
                                     </div>
                                     <table class="table table-bordered table-striped text-center">
@@ -224,10 +224,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                           $sql = "SELECT siswa.id, siswa.no_siswa, siswa.tanggal_daftar, siswa.nama, siswa.tempat_lahir, siswa.tanggal_lahir, 
-                                           siswa.jk, siswa.alamat, siswa.telepon, siswa.email, 
-                                           program.nama AS program_name, course.nama AS course_name, 
-                                           siswa.program_id, siswa.course_id, siswa.status FROM siswa LEFT JOIN program ON siswa.program_id = program.id LEFT JOIN course ON siswa.course_id = course.id WHERE siswa.status = 'Wait'";
+                                            $sql = "SELECT siswa.id, siswa.no_siswa, siswa.tanggal_daftar, siswa.nama, siswa.tempat_lahir, siswa.tanggal_lahir, 
+                                              siswa.jk, siswa.alamat, siswa.telepon, siswa.email, 
+                                              program.nama AS program_name, course.nama AS course_name, 
+                                              siswa.program_id, siswa.course_id, siswa.status FROM siswa LEFT JOIN program ON siswa.program_id = program.id LEFT JOIN course ON siswa.course_id = course.id WHERE siswa.status = 'Active'";
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 $count = 1;
@@ -264,7 +264,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                                                           
                                                         </td>";
                                                     echo "<td>
-                                                            <button class='btn btn-sm btn-link deleteBtn' data-bs-toggle='modal' data-bs-target='#deleteModal' data-student-id='" . $row['id'] . "'> <i class='lni lni-trash-can text-danger'></i></button>
+                                                            <form action='' method='POST' class='delete-form' style='display:inline-block;'>
+                                                                <input type='hidden' name='article_id' value='" . $row['id'] . "'>
+                                                                <input type='hidden' name='delete_article' value='1'>
+                                                                <button type='button' class='btn btn-link text-danger p-0 m-0 delete-btn'><i class='lni lni-trash-can text-danger'></i></button>
+                                                            </form>
                                                         </td>";
                                                     echo "</tr>";
                                                 }
@@ -285,7 +289,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
 
             <!-- Add Modal -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-lg modal-dialog-centered text-white">
                     <div class="modal-content">
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="modal-header">
@@ -382,7 +386,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
 
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg modal-dialog-centered text-white">
                     <div class="modal-content">
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="modal-header">
@@ -480,30 +484,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
             </div>
             <!-- End Edit Modal -->
 
-            <!-- Delete Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Delete Student</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Form content here -->
-                                <input type="hidden" id="delete_student_id" name="student_id">
-                                <p>Are you sure you want to delete this student?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger" name="delete_student">Delete</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- End Delete Modal -->
-
             <!-- SweetAlert2 JS -->
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
             <!-- Bootstrap JS -->
@@ -545,11 +525,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                 });
 
                 // Delete Student Function
-                var deleteBtns = document.querySelectorAll('.deleteBtn');
-                deleteBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        let student_id = btn.getAttribute('data-student-id');
-                        document.getElementById('delete_student_id').value = student_id;
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        const form = button.closest('form');
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Do you really want to delete this article?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, keep it'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
                     });
                 });
 

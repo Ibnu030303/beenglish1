@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_service'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_service'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     }
 }
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_service'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_service'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     }
 }
@@ -83,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_service'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_service'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_service.php';
                         });";
     }
 }
@@ -209,7 +209,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_service'])) {
 
     <!-- Add Service Modal -->
     <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addServiceModalLabel">Tambah Service</h1>
@@ -246,7 +246,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_service'])) {
 
     <!-- Edit Service Modal -->
     <div class="modal fade" id="editServiceModal" tabindex="-1" aria-labelledby="editServiceModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editServiceModalLabel">Edit Service</h1>

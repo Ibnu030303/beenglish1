@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_instructor'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_instructor'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     }
 }
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_instructor'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_instructor'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     }
 }
@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_instructor'])) 
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_instructor'])) 
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_instruktur.php';
                         });";
     }
 }
@@ -254,7 +254,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_instructor'])) 
     <!-- Modal -->
     <!-- Modal for Adding Instructor -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered  modal-lg">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Instruktur</h1>
@@ -324,7 +324,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_instructor'])) 
     <!-- Edit Modal -->
     <!-- Modal for Editing Instructor -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered  modal-lg">
+        <div class="modal-dialog modal-dialog-centered  modal-lg text-white">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="editModalLabel">Edit Instruktur</h1>

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_program'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_program.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_program'])) {
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_program.php';
                             });";
         }
     } else {
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_program'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_program.php';
                         });";
     }
 }
@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_program'])) {
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_program.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_program'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_program.php';
                             });";
         }
     } else {
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_program'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_program.php';
                         });";
     }
 }
@@ -110,7 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_program'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_program.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -119,7 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_program'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_program.php';
                         });";
     }
 }
@@ -231,7 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_program'])) {
 
                 <!-- Modal Add Program -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered modal-lg text-white">
                         <div class="modal-content">
                             <form method="POST" enctype="multipart/form-data">
                                 <div class="modal-header">
@@ -277,7 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_program'])) {
 
                 <!-- Modal Edit Program -->
                 <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-dialog-centered modal-lg text-white">
                         <div class="modal-content">
                             <form method="POST" enctype="multipart/form-data">
                                 <div class="modal-header">
@@ -332,6 +332,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_program'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="../assets/js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             <?php if (!empty($alertMessage)) {

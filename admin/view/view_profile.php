@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_profile'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_profile.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_profile'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_profile.php';
                         });";
     }
 }
@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_profile'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_profile.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_profile'])) {
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_profile.php';
                             });";
         }
     } else {
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_profile'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_profile.php';
                         });";
     }
 }
@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_profile.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_profile.php';
                             });";
         }
     } else {
@@ -181,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="card-title mt-3 fw-bold">Profile</h5>
-                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#addModal">Tambah</button>
                                     </div>
                                     <table class="table table-bordered table-striped text-center">
                                         <thead>
@@ -253,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
 
     <!-- Add Profile Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -301,7 +301,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_profile'])) {
 
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">

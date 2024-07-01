@@ -12,16 +12,18 @@ $alertMessage = '';
 // Handling article deletion
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_article'])) {
     $article_id = mysqli_real_escape_string($conn, $_POST['article_id']);
-    $sql = "DELETE FROM articel WHERE id = $article_id";
-
-    if ($conn->query($sql) === TRUE) {
+    $sql = "DELETE FROM articel WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $article_id);
+    
+    if ($stmt->execute()) {
         $alertMessage = "Swal.fire({
                             title: 'Success',
                             text: 'Article deleted successfully.',
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_articel.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -30,9 +32,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_article'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_articel.php';
                         });";
     }
+    $stmt->close();
 }
 
 // Handling article addition
@@ -42,9 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_article'])) {
     $image = $_FILES['image']['name'];
     $target = "../assets/uploads/" . basename($image);
 
-    $sql = "INSERT INTO articel (title, content, image) VALUES ('$title', '$content', '$image')";
+    $sql = "INSERT INTO articel (title, content, image) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $title, $content, $image);
 
-    if ($conn->query($sql) === TRUE) {
+    if ($stmt->execute()) {
         if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
             $alertMessage = "Swal.fire({
                                 title: 'Success',
@@ -52,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_article'])) {
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_articel.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -61,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_article'])) {
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_articel.php';
                             });";
         }
     } else {
@@ -71,9 +76,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_article'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_articel.php';
                         });";
     }
+    $stmt->close();
 }
 
 // Handling article editing
@@ -84,17 +90,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
     $image = $_FILES['image']['name'];
     $target = "../assets/uploads/" . basename($image);
 
-    $sql = "UPDATE articel SET title='$title', content='$content', image='$image' WHERE id=$article_id";
+    // If no new image is uploaded, retain the old image
+    if (empty($image)) {
+        $sql = "UPDATE articel SET title=?, content=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $title, $content, $article_id);
+    } else {
+        $sql = "UPDATE articel SET title=?, content=?, image=? WHERE id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssi", $title, $content, $image, $article_id);
+    }
 
-    if ($conn->query($sql) === TRUE) {
-        if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
+    if ($stmt->execute()) {
+        if (empty($image) || move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
             $alertMessage = "Swal.fire({
                                 title: 'Success',
                                 text: 'Article updated successfully.',
                                 icon: 'success',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_articel.php';
                             });";
         } else {
             $alertMessage = "Swal.fire({
@@ -103,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
                                 icon: 'error',
                                 confirmButtonText: 'OK'
                             }).then(function() {
-                                window.location = 'index.php';
+                                window.location = 'view_articel.php';
                             });";
         }
     } else {
@@ -113,9 +128,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_articel.php';
                         });";
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
@@ -133,6 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <!-- Style -->
     <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
@@ -169,9 +187,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="card-title mt-3 fw-bold">Post Article</h5>
-                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Add</button>
+                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Tambah</button>
                                     </div>
-                                    <table class="table table-bordered table-striped text-center">
+                                    <table id="articleTable" class="table table-bordered table-striped text-center">
                                         <thead>
                                             <tr>
                                                 <th scope="col">Title</th>
@@ -229,7 +247,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
 
     <!-- Add Article Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog  modal-lg modal-dialog-centered text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -261,7 +279,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
 
     <!-- Edit Article Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -296,6 +314,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
     <!-- Custom Script -->
     <script src="../assets/js/script.js"></script>
 
@@ -343,6 +363,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_article'])) {
                     // Handle image population if needed
                 });
             });
+
+            // Initialize DataTables
+            $('#articleTable').DataTable();
         });
     </script>
 </body>

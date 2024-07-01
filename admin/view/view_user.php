@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_user'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     }
 }
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_user'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_user'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     }
 }
@@ -77,6 +77,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
 
     $sql = "UPDATE users SET nama='$nama', email='$email', role='$role' WHERE id=$user_id";
 
+    // Check if password field is not empty
+    if (!empty($_POST['password'])) {
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "UPDATE users SET nama='$nama', email='$email', password='$hashed_password', role='$role' WHERE id=$user_id";
+    }
+
     if ($conn->query($sql) === TRUE) {
         $alertMessage = "Swal.fire({
                             title: 'Success',
@@ -84,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -93,7 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_user.php';
                         });";
     }
 }
@@ -150,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <h5 class="card-title mt-3 fw-bold">Profile</h5>
-                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#addModal">Tambah</button>
                                     </div>
                                     <table class="table table-bordered table-striped text-center">
                                         <thead>
@@ -213,7 +220,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
 
     <!-- Add Users Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -252,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
 
     <!-- Edit Profile Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg text-white">
             <div class="modal-content">
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
@@ -294,6 +301,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_user'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <!-- Script -->
+    <script src="../assets/js/script.js"></script>
     <!-- Custom Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {

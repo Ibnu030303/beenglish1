@@ -5,8 +5,11 @@ require_once 'config.php';
 $default_course_id = 2; // Assuming 1 is the course ID for English
 
 // Query to fetch programs for the default course (English)
-$sql = "SELECT * FROM program WHERE course_id = $default_course_id LIMIT 3";
-$result = $conn->query($sql);
+$sql = "SELECT * FROM program WHERE course_id = ? LIMIT 3";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $default_course_id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
 
 <!DOCTYPE html>
@@ -48,10 +51,9 @@ $result = $conn->query($sql);
     </section>
     <!-- END HERO -->
 
-    <section id="course" class="course"  >
+    <section id="course" class="course">
         <div class="container">
-            <div class="row" data-aos="fade-up"
-            data-aos-duration="1000">
+            <div class="row" data-aos="fade-up" data-aos-duration="1000">
                 <div class="col-12">
                     <h2 class="text-start mb-3">Course</h2>
                 </div>
@@ -67,7 +69,7 @@ $result = $conn->query($sql);
                                 // Output buttons for each course
                                 $isActive = ($row['id'] == $default_course_id) ? 'active' : '';
                         ?>
-                                <button class="btn btn-primary my-2 mx-1 course-btn <?php echo $isActive; ?>" data-course-id="<?php echo $row['id']; ?>"><?php echo $row["nama"]; ?></button>
+                                <button class="btn btn-primary my-2 mx-1 course-btn <?php echo $isActive; ?>" data-course-id="<?php echo htmlspecialchars($row['id']); ?>"><?php echo htmlspecialchars($row["nama"]); ?></button>
                         <?php
                             }
                         } else {
@@ -78,8 +80,7 @@ $result = $conn->query($sql);
                 </div>
             </div>
 
-            <section id="program-list" class="mt-4" data-aos="fade-up"
-            data-aos-anchor-placement="top-bottom" data-aos-duration="1400">
+            <section id="program-list" class="mt-4" data-aos="fade-up" data-aos-anchor-placement="top-bottom" data-aos-duration="1400">
                 <div class="row" id="program-list-container">
                     <!-- Programs will be dynamically loaded here -->
                 </div>
@@ -202,4 +203,8 @@ $result = $conn->query($sql);
 
 </html>
 
-<?php $conn->close(); ?>
+<?php
+$stmt->close();
+$conn->close();
+?>
+

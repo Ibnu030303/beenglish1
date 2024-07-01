@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -64,7 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     }
 }
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     }
 }
@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -143,7 +143,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_siswa_baru.php';
                         });";
     }
 }
@@ -156,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Siswa Dashboard</title>
+    <title>Siswa Baru Dashboard</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" />
@@ -185,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                 <nav>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item active">Siswa</li>
+                        <li class="breadcrumb-item active">Siswa Baru</li>
                     </ol>
                 </nav>
             </div>
@@ -198,10 +198,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                     <div class="row">
                         <div class="col">
                             <div class="card">
-                                <div class="card-body">
+                                <div class="card-body" style="overflow-y: auto;">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title mt-3 fw-bold">Siswa</h5>
-                                        <button class="btn btn-primary mt-4 mb-4" style="height: 43px;" data-bs-toggle="modal" data-bs-target="#exampleModal">Tambah</button>
+                                        <h5 class="card-title mt-3 fw-bold">Siswa Baru</h5>
                                     </div>
                                     <table class="table table-bordered table-striped text-center">
                                         <thead>
@@ -224,7 +223,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $sql = "SELECT siswa.id, siswa.no_siswa, siswa.tanggal_daftar, siswa.nama, siswa.tempat_lahir, siswa.tanggal_lahir, siswa.jk, siswa.alamat, siswa.telepon, siswa.email, program.nama AS program_name, course.nama AS course_name, siswa.program_id, siswa.course_id, siswa.status FROM siswa LEFT JOIN program ON siswa.program_id = program.id LEFT JOIN course ON siswa.course_id = course.id";
+                                            $sql = "SELECT siswa.id, siswa.no_siswa, siswa.tanggal_daftar, siswa.nama, siswa.tempat_lahir, siswa.tanggal_lahir, 
+                                              siswa.jk, siswa.alamat, siswa.telepon, siswa.email, 
+                                              program.nama AS program_name, course.nama AS course_name, 
+                                              siswa.program_id, siswa.course_id, siswa.status FROM siswa LEFT JOIN program ON siswa.program_id = program.id LEFT JOIN course ON siswa.course_id = course.id WHERE siswa.status = 'Wait'";
                                             $result = $conn->query($sql);
                                             if ($result->num_rows > 0) {
                                                 $count = 1;
@@ -280,106 +282,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
             </section>
             <!-- End Section -->
 
-            <!-- Add Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Tambah Siswa</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Form content here -->
-                                <div class="mb-3">
-                                    <div class="mb-3">
-                                        <label for="no_siswa" class="form-label">No Siswa</label>
-                                        <input type="text" class="form-control" id="no_siswa" name="no_siswa" value="<?php echo generateStudentNumber($conn); ?>" readonly>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="nama" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" id="nama" name="nama" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="tempat_lahir" class="form-label">Tempat Lahir</label>
-                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="jk" class="form-label">Jenis Kelamin</label>
-                                    <select class="form-select" id="jk" name="jk" required>
-                                        <option value="L">Laki-laki</option>
-                                        <option value="P">Perempuan</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="alamat" class="form-label">Alamat</label>
-                                    <textarea class="form-control" id="alamat" name="alamat" rows="3" required></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="telepon" class="form-label">Telepon</label>
-                                    <input type="tel" class="form-control" id="telepon" name="telepon" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="email" class="form-control" id="email" name="email" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="program_id" class="form-label">Program</label>
-                                    <select class="form-select" id="program_id" name="program_id" required>
-                                        <!-- Option populated dynamically from database -->
-                                        <?php
-                                        $sql = "SELECT id, nama FROM program";
-                                        $result = $conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="course_id" class="form-label">Course</label>
-                                    <select class="form-select" id="course_id" name="course_id" required>
-                                        <!-- Option populated dynamically from database -->
-                                        <?php
-                                        $sql = "SELECT id, nama FROM course";
-                                        $result = $conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="status" class="form-label">Status</label>
-                                    <select class="form-select" id="status" name="status" required>
-                                        <option value="Wait">Wait</option>
-                                        <option value="Active">Active</option>
-                                        <option value="Off">Off</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary" name="add_student">Save changes</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- End Add Modal -->
-
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg modal-dialog-centered text-white">
                     <div class="modal-content">
                         <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                             <div class="modal-header">

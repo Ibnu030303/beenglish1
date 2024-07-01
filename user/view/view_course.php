@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_course'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_course'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     }
 }
@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_course'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_course'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     }
 }
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_course'])) {
                             icon: 'success',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     } else {
         $alertMessage = "Swal.fire({
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_course'])) {
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
-                            window.location = 'index.php';
+                            window.location = 'view_course.php';
                         });";
     }
 }
@@ -198,20 +198,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_course'])) {
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Course</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h1 class="modal-title fs-5 text-white" id="exampleModalLabel">Tambah Course</h1>
+                    <button type="button" class="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form action="" method="POST">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama</label>
+                            <label for="nama" class="form-label text-white">Nama</label>
                             <input type="text" class="form-control" id="nama" name="nama" required>
                         </div>
                         <div class="mb-3">
-                            <label for="deskripsi" class="form-label">Deskripsi</label>
+                            <label for="deskripsi" class="form-label text-white">Deskripsi</label>
                             <textarea class="form-control" id="deskripsi" name="deskripsi" required></textarea>
                         </div>
                         <input type="hidden" name="add_course" value="1">
@@ -224,20 +224,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_course'])) {
 
     <!-- Edit Modal -->
     <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="editModalLabel">Edit Course</h1>
+                    <h1 class="modal-title fs-5 text-white" id="editModalLabel">Edit Course</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm" action="" method="POST">
                         <div class="mb-3">
-                            <label for="editNama" class="form-label">Nama</label>
+                            <label for="editNama" class="form-label text-white">Nama</label>
                             <input type="text" class="form-control" id="editNama" name="nama" required>
                         </div>
                         <div class="mb-3">
-                            <label for="editDeskripsi" class="form-label">Deskripsi</label>
+                            <label for="editDeskripsi" class="form-label text-white">Deskripsi</label>
                             <textarea class="form-control" id="editDeskripsi" name="deskripsi" required></textarea>
                         </div>
                         <input type="hidden" id="editCourseId" name="course_id">

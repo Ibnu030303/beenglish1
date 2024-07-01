@@ -1,4 +1,4 @@
-<a href="">
+<a href="https://api.whatsapp.com/send/?phone=0895331887310&text&type=phone_number&app_absent=0">
     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="55" height="55" viewBox="0 0 64 64">
         <radialGradient id="AhngXQ8Zf2VLA52L6fLwQa_OlCQeBlsSdb9_gr1" cx="32.5" cy="32.5" r="30.516" gradientUnits="userSpaceOnUse">
             <stop offset="0" stop-color="#eed7a2"></stop>

@@ -21,7 +21,6 @@ if ($result->num_rows > 0) {
                 <div class="card-body">
                     <h5 class="card-title"><?php echo $row["nama"]; ?></h5>
                     <p class="card-text"><?php echo $row["deskripsi"]; ?></p>
-                    <a href="#" class="btn btn-primary">Lihat Selengkapnya <img src="img/icon-arrow-right.png" alt=""></a>
                 </div>
             </div>
         </div>

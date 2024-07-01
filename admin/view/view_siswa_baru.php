@@ -7,67 +7,7 @@ if ($_SESSION['role'] != 'admin') {
     exit();
 }
 
-function generateStudentNumber($conn)
-{
-    $currentYear = date('Y');
-    $prefix = $currentYear . '1';
-
-    // Get the maximum student number for the current year
-    $sql = "SELECT MAX(CAST(SUBSTRING(no_siswa, 6, 4) AS UNSIGNED)) as max_number 
-            FROM siswa 
-            WHERE no_siswa LIKE '$prefix%'";
-    $result = $conn->query($sql);
-    $row = $result->fetch_assoc();
-    $maxNumber = isset($row['max_number']) ? $row['max_number'] : 0;
-
-    // Increment the maximum number by 1
-    $newNumber = $maxNumber + 1;
-
-    // Generate the new student number
-    return $prefix . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
-}
-
-
 $alertMessage = '';
-
-// Add Student
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_student'])) {
-    $no_siswa = generateStudentNumber($conn);
-    $nama = mysqli_real_escape_string($conn, $_POST['nama']);
-    $tanggal_daftar = date('Y-m-d'); // Mengisi tanggal daftar otomatis dengan tanggal hari ini
-    $tempat_lahir = mysqli_real_escape_string($conn, $_POST['tempat_lahir']);
-    $tanggal_lahir = mysqli_real_escape_string($conn, $_POST['tanggal_lahir']);
-    $jk = mysqli_real_escape_string($conn, $_POST['jk']);
-    $alamat = mysqli_real_escape_string($conn, $_POST['alamat']);
-    $telepon = mysqli_real_escape_string($conn, $_POST['telepon']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $program_id = mysqli_real_escape_string($conn, $_POST['program_id']);
-    $course_id = mysqli_real_escape_string($conn, $_POST['course_id']);
-    $status = mysqli_real_escape_string($conn, $_POST['status']);
-
-    $sql = "INSERT INTO siswa (no_siswa, nama, tanggal_daftar, tempat_lahir, tanggal_lahir, jk, alamat, telepon, email, program_id, course_id, status)
-            VALUES ('$no_siswa', '$nama', '$tanggal_daftar', '$tempat_lahir', '$tanggal_lahir', '$jk', '$alamat', '$telepon', '$email', '$program_id', '$course_id', '$status')";
-
-    if ($conn->query($sql) === TRUE) {
-        $alertMessage = "Swal.fire({
-                            title: 'Success',
-                            text: 'Student added successfully.',
-                            icon: 'success',
-                            confirmButtonText: 'OK'
-                        }).then(function() {
-                            window.location = 'view_siswa_baru.php';
-                        });";
-    } else {
-        $alertMessage = "Swal.fire({
-                            title: 'Error',
-                            text: 'There was an error adding the student: " . $conn->error . "',
-                            icon: 'error',
-                            confirmButtonText: 'OK'
-                        }).then(function() {
-                            window.location = 'view_siswa_baru.php';
-                        });";
-    }
-}
 
 // Edit Student
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
@@ -100,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
                 status = '$status'
             WHERE id = $student_id";
 
-    if ($conn->query($sql) === TRUE) {
+    $result = $conn->query($sql);
+    if ($result) {
         $alertMessage = "Swal.fire({
                             title: 'Success',
                             text: 'Student updated successfully.',
@@ -112,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['edit_student'])) {
     } else {
         $alertMessage = "Swal.fire({
                             title: 'Error',
-                            text: 'There was an error updating the student: " . $conn->error . "',
+                            text: 'There was an error updating the student.',
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
@@ -127,7 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
 
     $sql = "DELETE FROM siswa WHERE id = $student_id";
 
-    if ($conn->query($sql) === TRUE) {
+    $result = $conn->query($sql);
+    if ($result) {
         $alertMessage = "Swal.fire({
                             title: 'Success',
                             text: 'Student deleted successfully.',
@@ -139,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
     } else {
         $alertMessage = "Swal.fire({
                             title: 'Error',
-                            text: 'There was an error deleting the student: " . $conn->error . "',
+                            text: 'There was an error deleting the student.',
                             icon: 'error',
                             confirmButtonText: 'OK'
                         }).then(function() {
@@ -200,7 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                             <div class="card">
                                 <div class="card-body" style="overflow-y: auto;">
                                     <div class="d-flex justify-content-between">
-                                        <h5 class="card-title mt-3 fw-bold">Siswa Baru</h5>
+                                        <h5 class="card-title mt-3 fw-bold">Siswa</h5>
                                     </div>
                                     <table class="table table-bordered table-striped text-center">
                                         <thead>
@@ -263,7 +205,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                                                           
                                                         </td>";
                                                     echo "<td>
-                                                            <button class='btn btn-sm btn-link deleteBtn' data-bs-toggle='modal' data-bs-target='#deleteModal' data-student-id='" . $row['id'] . "'> <i class='lni lni-trash-can text-danger'></i></button>
+                                                            <form action='' method='POST' class='delete-form' style='display:inline-block;'>
+                                                                <input type='hidden' name='student_id' value='" . $row['id'] . "'>
+                                                                <input type='hidden' name='delete_student' value='1'>
+                                                                <button type='button' class='btn btn-link text-danger p-0 m-0 delete-btn'><i class='lni lni-trash-can text-danger'></i></button>
+                                                            </form>
                                                         </td>";
                                                     echo "</tr>";
                                                 }
@@ -281,6 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                 </div>
             </section>
             <!-- End Section -->
+
 
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
@@ -334,41 +281,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                                     <input type="email" class="form-control" id="edit_email" name="email" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="edit_program_id" class="form-label">Program</label>
-                                    <select class="form-select" id="edit_program_id" name="program_id" required>
-                                        <!-- Option populated dynamically from database -->
-                                        <?php
-                                        $sql = "SELECT id, nama FROM program";
-                                        $result = $conn->query($sql);
-                                        if ($result->num_rows > 0) {
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
                                     <label for="edit_course_id" class="form-label">Course</label>
-                                    <select class="form-select" id="edit_course_id" name="course_id" required>
+                                    <select class="form-select" id="edit_course_id" name="course_id" onchange="fetchProgramsEdit(this.value)">
+                                        <option value="">Select a course...</option>
                                         <!-- Option populated dynamically from database -->
                                         <?php
                                         $sql = "SELECT id, nama FROM course";
                                         $result = $conn->query($sql);
                                         if ($result->num_rows > 0) {
                                             while ($row = $result->fetch_assoc()) {
-                                                echo "<option value='" . $row['id'] . "'>" . $row['nama'] . "</option>";
+                                                $selected = ($row['id'] == $course_id) ? 'selected' : '';
+                                                echo "<option value='" . $row['id'] . "' $selected>" . $row['nama'] . "</option>";
                                             }
+                                        } else {
+                                            echo "<option value=''>No courses available</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="edit_program_id" class="form-label">Program</label>
+                                    <select class="form-select" id="edit_program_id" name="program_id">
+                                        <!-- Program options will be populated dynamically based on course selection -->
+                                        <?php
+                                        if (!empty($course_id)) {
+                                            $sql = "SELECT id, nama FROM program WHERE course_id = $course_id";
+                                            $result = $conn->query($sql);
+                                            if ($result->num_rows > 0) {
+                                                while ($row = $result->fetch_assoc()) {
+                                                    $selected = ($row['id'] == $program_id) ? 'selected' : '';
+                                                    echo "<option value='" . $row['id'] . "' $selected>" . $row['nama'] . "</option>";
+                                                }
+                                            } else {
+                                                echo "<option value=''>No programs available for this course</option>";
+                                            }
+                                        } else {
+                                            echo "<option value=''>Select a course first</option>";
                                         }
                                         ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="edit_status" class="form-label">Status</label>
-                                    <select class="form-select" id="status" name="status" required>
+                                    <select class="form-select" id="edit_status" name="status" required>
                                         <option value="Wait">Wait</option>
                                         <option value="Active">Active</option>
-                                        <option value="Off">Off</option>
                                     </select>
                                 </div>
                             </div>
@@ -382,36 +339,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
             </div>
             <!-- End Edit Modal -->
 
-            <!-- Delete Modal -->
-            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="deleteModalLabel">Delete Student</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Form content here -->
-                                <input type="hidden" id="delete_student_id" name="student_id">
-                                <p>Are you sure you want to delete this student?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-danger" name="delete_student">Delete</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- End Delete Modal -->
-
             <!-- SweetAlert2 JS -->
             <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
             <!-- Bootstrap JS -->
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
             <!-- Your custom scripts (optional) -->
             <script>
+                // Function to fetch programs based on selected course for edit modal
+                function fetchProgramsEdit(courseId) {
+                    return fetch('../../fetch_programs.php?course_id=' + courseId)
+                        .then(response => response.json())
+                        .then(data => {
+                            const programSelect = document.getElementById('edit_program_id');
+                            programSelect.innerHTML = ''; // Clear existing options
+
+                            data.forEach(program => {
+                                const option = document.createElement('option');
+                                option.value = program.id;
+                                option.textContent = program.nama;
+                                programSelect.appendChild(option); // Append new options
+                            });
+
+                            // Return the selected program_id (if needed)
+                            return data.length > 0 ? data[0].id : ''; // Example: Select the first program by default
+                        })
+                        .catch(error => {
+                            console.error('Error fetching programs:', error);
+                            return ''; // Return default value or handle error as needed
+                        });
+                }
+
                 // Edit Student Function
                 var editBtns = document.querySelectorAll('.editBtn');
                 editBtns.forEach(btn => {
@@ -440,18 +397,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_student'])) {
                         document.getElementById('edit_alamat').value = alamat;
                         document.getElementById('edit_telepon').value = telepon;
                         document.getElementById('edit_email').value = email;
-                        document.getElementById('edit_program_id').value = program_id;
                         document.getElementById('edit_course_id').value = course_id;
                         document.getElementById('edit_status').value = status;
+
+                        // Fetch programs based on course_id
+                        fetchProgramsEdit(course_id).then(selected_program_id => {
+                            document.getElementById('edit_program_id').value = selected_program_id;
+                        });
                     });
                 });
 
                 // Delete Student Function
-                var deleteBtns = document.querySelectorAll('.deleteBtn');
-                deleteBtns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        let student_id = btn.getAttribute('data-student-id');
-                        document.getElementById('delete_student_id').value = student_id;
+                const deleteButtons = document.querySelectorAll('.delete-btn');
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function(event) {
+                        event.preventDefault();
+                        const form = button.closest('form');
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            text: 'Do you really want to delete this student?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonText: 'Yes, delete it!',
+                            cancelButtonText: 'No, keep it'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                form.submit();
+                            }
+                        });
                     });
                 });
 

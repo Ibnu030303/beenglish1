@@ -18,7 +18,7 @@
             <div class="col-md">
                 <div class="cards d-flex flex-wrap justify-content-center">
                     <?php
-                    $sql = "SELECT * FROM service";
+                    $sql = "SELECT * FROM service LIMIT 3"; // Limiting to 3 rows
                     $result = $conn->query($sql);
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
@@ -32,7 +32,7 @@
                         <?php
                         }
                     } else {
-                        echo "No programs available for English course.";
+                        echo "No services available.";
                     }
                     ?>
                 </div>
